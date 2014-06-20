@@ -22,6 +22,7 @@ run_list:
 
 knife role show tomcat_mysql
 
+run_list:
   recipe[platformstack::default]
   recipe[rackops_rolebook::rack_user]
   recipe[tomstack::mysql_base]
