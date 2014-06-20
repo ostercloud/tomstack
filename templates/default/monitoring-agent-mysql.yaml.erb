@@ -1,0 +1,10 @@
+type: agent.mysql
+label: Local MYSQL check on <%= node['cloud']['public_ipv4'] %>
+disabled: <%= node['tomstack']['cloud_monitoring']['agent_mysql']['disabled'] %>
+period: <%= node['tomstack']['cloud_monitoring']['agent_mysql']['period'] %>
+timeout: <%= node['tomstack']['cloud_monitoring']['agent_mysql']['timeout'] %>
+details:
+  host: localhost
+  port: <%= node['mysql']['port'] %>
+  username: <%= node['tomstack']['cloud_monitoring']['agent_mysql']['user'] %>
+  password: <%= node['tomstack']['cloud_monitoring']['agent_mysql']['password'] %>

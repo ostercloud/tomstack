@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# require 'berkshelf/vagrant'
+
+boxes = [
+{ :name => :tomstack01, :ip => '33.33.33.10' },
+{ :name => :tomstack02, :ip => '33.33.33.11' },
+]
+
+Vagrant.configure("2") do |config|
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = 'opscode-ubuntu-14.04'
+  config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+ 
+  # Enabling the Berkshelf plugin. To enable this globally, add this configuration
+  # option to your ~/.vagrant.d/Vagrantfile file
+  config.berkshelf.enabled = true
+  config.berkshelf.berksfile_path = "../../../../Berksfile"
+  config.omnibus.chef_version = :latest
+
+  # Name and build each server
+  boxes.each do |opts|
+    config.vm.define opts[:name] do |config|
+      config.vm.host_name =   "%s" % opts[:name].to_s
+      config.vm.network :private_network, ip: opts[:ip]
+   end
+
+   # need a second disk for the gluster brick (5GB)
+   config.vm.provider :virtualbox do |config|
+     file_to_disk = '/tmp/temp_disk_%s.vdi' % opts[:name].to_s
+     config.customize ['createhd', '--filename', file_to_disk, '--size', 5 * 1024]
+     config.customize ['storageattach', :id, '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+   end
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.run_list = [
+      # wrapper cookbook for testing
+      "recipe[tomstack_test_gluster::test]"
+    ]
+  end
+end
