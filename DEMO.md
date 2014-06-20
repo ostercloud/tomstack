@@ -50,6 +50,6 @@ override_attributes:
 Bootstrap the nodes
 ===================
 <pre>
-knife bootstrap -x root -r 'role[tomcat_mysql]' -E stage
-knife bootstrap -x root -r 'role[tomcat_web]' -E stage
+knife bootstrap IPADDR -x root -r 'role[tomcat_mysql]' -E stage
+knife bootstrap IPADDR -x root -r 'role[tomcat_web]' -E stage
 </pre>
