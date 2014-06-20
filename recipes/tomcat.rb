@@ -30,8 +30,6 @@ else
   bindip = best_ip_for(mysql)
 end
 
-bindip = best_ip_for(mysql)
-
 # add iptables rule to allow traffic on the port
 add_iptables_rule('INPUT', "-m tcp -p tcp --dport #{node['tomcat']['port']} -j ACCEPT", 9999, 'Open port for tomcat')
 
@@ -67,8 +65,8 @@ end
 template '/etc/tomcat6/Catalina/localhost/ROOT.xml' do
   source 'tomcat/context.xml.erb'
   variables(
-    username: 'root',
-    password: node['mysql']['server_root_password'],
+    username: node['tomcat-demo']['db_user'],
+    password: node['tomcat-demo']['password'],
     host: bindip
   )
   owner node['tomcat']['user']
