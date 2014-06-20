@@ -11,23 +11,22 @@ nova boot tomcat-mysql --poll --image "ffa476b1-9b14-46bd-99a8-862d1d94eb7a" \
 Create the Roles
 ================
 <pre>
-knife role edit tomcat_web
+knife role show tomcat_web
 
-  "run_list": [
-    "recipe[platformstack::monitors]",
-    "recipe[platformstack::default]",
-    "recipe[rackops_rolebook::rack_user]",
-    "recipe[tomstack::apache]",
-    "recipe[tomstack::tomcat]"
-  ],
+run_list:
+  recipe[platformstack::monitors]
+  recipe[platformstack::default]
+  recipe[rackops_rolebook::rack_user]
+  recipe[tomstack::apache]
+  recipe[tomstack::tomcat]
 
-knife role edit tomcat_mysql
+knife role show tomcat_mysql
 
-  "run_list": [
-    "recipe[platformstack::default]",
-    "recipe[rackops_rolebook::rack_user]",
-    "recipe[tomstack::mysql_base]"
-  ],
+  recipe[platformstack::default]
+  recipe[rackops_rolebook::rack_user]
+  recipe[tomstack::mysql_base]
+  recipe[tomstack::tomcat_demo_db]
+
 </pre>
 
 Set required attributes in Environment
