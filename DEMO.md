@@ -39,15 +39,18 @@ override_attributes:
   platformstack:
     cloud_monitoring:
       enabled: false
+    cloud_backup:
+      enabled: false
+
   rackspace:
     cloud_credentials:
       api_key:  CHANGEME
       username: smbmarquee
-    cloudbackup:
-      enabled: false
 </pre>
 
 Bootstrap the nodes
 ===================
-knife bootstrap -x root -r 'role[tomcat_mysql]' -E stage
-knife bootstrap -x root -r 'role[tomcat_web]' -E stage
+<pre>
+knife bootstrap IPADDR -x root -r 'role[tomcat_mysql]' -E stage
+knife bootstrap IPADDR -x root -r 'role[tomcat_web]' -E stage
+</pre>
