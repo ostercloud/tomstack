@@ -1,10 +1,10 @@
 Build Cloud Servers
 ===================
 <pre>
-nova boot tomcat-web --poll --image "ffa476b1-9b14-46bd-99a8-862d1d94eb7a" \
+nova boot tomcat-web --image "ffa476b1-9b14-46bd-99a8-862d1d94eb7a" \
 --flavor "performance1-1" --key-name laptop
 
-nova boot tomcat-mysql --poll --image "ffa476b1-9b14-46bd-99a8-862d1d94eb7a" \
+nova boot tomcat-mysql --image "ffa476b1-9b14-46bd-99a8-862d1d94eb7a" \
 --flavor "performance1-1" --key-name laptop
 </pre>
 
